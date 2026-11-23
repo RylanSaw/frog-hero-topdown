@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>FROG HERO | 2D Top-Down Action Web Game by Rylan Saw</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <!-- Top Compact HUD -->
+    <header class="top-bar">
+      <div class="brand-group">
+        <span class="zone-pill">LILY POND</span>
+        <h1 class="game-title">FROG HERO</h1>
+      </div>
+
+      <div class="hud-stats">
+        <div class="hud-chip">HP <strong id="hp-val">100</strong></div>
+        <div class="hud-chip">SCORE <strong id="score-val">0</strong></div>
+        <div class="hud-chip">WAVE <strong id="wave-val">1</strong></div>
+        <div class="hud-chip">BEST <strong id="best-val">0</strong></div>
+      </div>
+
+      <div class="top-actions">
+        <button id="sound-btn" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">&#x1F50A;</button>
+        <button id="info-btn" class="icon-btn" title="How to Play" aria-label="How to Play">?</button>
+        <button id="fullscreen-btn" class="icon-btn" title="Fullscreen" aria-label="Fullscreen">&#x26F6;</button>
+      </div>
+    </header>
+
+    <!-- Fullscreen Playable Top-Down Arena -->
+    <main class="stage-container" id="stage-container">
+      <canvas id="game-canvas"></canvas>
+
+      <!-- True Multi-Touch Mobile & PC Controls Overlay -->
+      <div class="touch-hud">
+        <!-- Left Virtual Joystick Zone -->
+        <div class="joystick-zone" id="joystick-zone" aria-label="Move Joystick">
+          <div class="joystick-base" id="joystick-base">
+            <div class="joystick-knob" id="joystick-knob"></div>
+          </div>
+        </div>
+
+        <div class="desktop-tip">
+          WASD / Arrows: Move &bull; Click / Space: Leaf Sword Slash &bull; E / Shift: Tongue Snatch
+        </div>
+
+        <!-- Right Dual Action Buttons -->
+        <div class="action-pad">
+          <button id="btn-tongue" class="action-btn tongue-btn" aria-label="Tongue Grapple">
+            TONGUE
+          </button>
+          <button id="btn-slash" class="action-btn slash-btn" aria-label="Sword Slash">
+            SLASH!
+          </button>
+        </div>
+      </div>
+
+      <!-- Start / Game Over Overlay -->
+      <div id="game-overlay" class="game-overlay">
+        <div class="pond-card">
+          <span class="pond-tag">2D TOP DOWN ACTION GAME</span>
+          <h2 id="overlay-title">FROG HERO ARENA</h2>
+          <p id="overlay-desc">
+            Defend the sacred lily pond! Move with the left stick or WASD, slash swamp beetles and slimes with your emerald leaf blade, and launch your sticky tongue to snatch golden fireflies or pull enemies in.
+          </p>
+          <button id="start-btn" class="play-btn">ENTER POND &#9654;</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Guide Modal -->
+  <div id="info-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="pond-card modal-card">
+      <button id="close-info-btn" class="modal-close" aria-label="Close">&times;</button>
+      <span class="pond-tag">HERO ABILITIES &amp; CONTROLS</span>
+      <h2>FROG HERO GUIDE</h2>
+      <ul class="guide-list">
+        <li><strong>Multi-Touch Movement:</strong> Drag the left virtual joystick with your left thumb while tapping SLASH or TONGUE with your right thumb at the same time.</li>
+        <li><strong>Leaf Blade Slash (Space / Click):</strong> Wide melee arc that knocks back and defeats swamp slimes and armored beetles.</li>
+        <li><strong>Sticky Tongue Snatch (E / Shift):</strong> Shoots forward to grab distant golden fireflies (+50 pts &amp; +10 HP) or yank monsters straight into sword range.</li>
+        <li><strong>Wave Progression:</strong> Defeat each wave of swamp invaders to unlock faster enemies and higher scores.</li>
+      </ul>
+      <p class="credit-line">
+        Designed &amp; Coded by <a href="https://github.com/RylanSaw" target="_blank" rel="noopener noreferrer">Rylan Saw</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

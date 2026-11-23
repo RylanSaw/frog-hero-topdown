@@ -1,0 +1,408 @@
+/* Frog Hero 2D Top-Down Theme (Mobile Multi-Touch + PC Responsive) */
+:root {
+  --pond-deep: #0B2B26;
+  --pond-mid: #164A41;
+  --lily-green: #4D9E63;
+  --leaf-bright: #8BE070;
+  --cream: #F6F4EA;
+  --ink: #10201C;
+  --scarf-red: #E85342;
+  --firefly-gold: #FFD147;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--pond-deep);
+  color: var(--cream);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  user-select: none;
+  touch-action: none;
+}
+
+.app-shell {
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top, 6px) env(safe-area-inset-right, 8px) env(safe-area-inset-bottom, 6px) env(safe-area-inset-left, 8px);
+  gap: 6px;
+}
+
+/* Top HUD Bar */
+.top-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--pond-mid);
+  border: 3px solid var(--ink);
+  box-shadow: 0 4px 0 var(--ink);
+  border-radius: 12px;
+  padding: 6px 12px;
+  z-index: 10;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zone-pill {
+  background: var(--leaf-bright);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+}
+
+.game-title {
+  font-family: "Fredoka", sans-serif;
+  font-size: clamp(1.15rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--cream);
+  text-shadow: 2px 2px 0 var(--ink);
+  line-height: 1;
+}
+
+.hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-chip {
+  background: var(--cream);
+  color: var(--ink);
+  border: 2.5px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  border-radius: 8px;
+  padding: 3px 8px;
+  font-size: clamp(0.72rem, 1.5vw, 0.88rem);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.hud-chip strong {
+  color: var(--scarf-red);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  background: var(--firefly-gold);
+  color: var(--ink);
+  border: 2.5px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* Fullscreen Canvas Stage */
+.stage-container {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  border: 4px solid var(--ink);
+  box-shadow: 0 6px 0 var(--ink);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #175B4F;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+/* Multi-Touch Controls Overlay */
+.touch-hud {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.joystick-zone {
+  pointer-events: auto;
+  width: 124px;
+  height: 124px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.joystick-base {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: rgba(246, 244, 234, 0.22);
+  border: 3px solid rgba(246, 244, 234, 0.55);
+  box-shadow: inset 0 0 12px rgba(16, 32, 28, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.joystick-knob {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 3.5px solid var(--ink);
+  box-shadow: 0 3px 0 var(--ink);
+  transform: translate(0px, 0px);
+  transition: transform 0.04s linear;
+}
+
+.desktop-tip {
+  background: rgba(16, 32, 28, 0.78);
+  color: var(--cream);
+  border: 2px solid rgba(246, 244, 234, 0.25);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.action-pad {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  touch-action: none;
+}
+
+.action-btn {
+  border-radius: 50%;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  border: 4px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  cursor: pointer;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tongue-btn {
+  width: 68px;
+  height: 68px;
+  background: #FF7B9C;
+  color: var(--ink);
+  font-size: 0.82rem;
+}
+
+.slash-btn {
+  width: 86px;
+  height: 86px;
+  background: var(--scarf-red);
+  color: #FFFFFF;
+  font-size: 1.05rem;
+}
+
+.action-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Overlays & Modals */
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 43, 38, 0.76);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 15;
+}
+
+.game-overlay.hidden,
+.modal-backdrop.hidden {
+  display: none !important;
+}
+
+.pond-card {
+  position: relative;
+  background: var(--cream);
+  color: var(--ink);
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  border-radius: 18px;
+  padding: 1.4rem 1.6rem;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+}
+
+.pond-tag {
+  display: inline-block;
+  background: var(--lily-green);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 0.74rem;
+  padding: 3px 11px;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  margin-bottom: 0.45rem;
+}
+
+.pond-card h2 {
+  font-family: "Fredoka", sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.pond-card p {
+  font-size: 0.9rem;
+  line-height: 1.52;
+  margin-bottom: 1.15rem;
+}
+
+.play-btn {
+  background: var(--firefly-gold);
+  color: var(--ink);
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  padding: 0.55rem 1.8rem;
+  border: 3.5px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.play-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 43, 38, 0.86);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-card {
+  text-align: left;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.guide-list {
+  margin: 0.5rem 0 1rem 1.15rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.guide-list li {
+  margin-bottom: 0.45rem;
+}
+
+.credit-line {
+  margin-bottom: 0 !important;
+  font-weight: 800;
+  text-align: center;
+}
+
+.credit-line a {
+  color: var(--scarf-red);
+  text-decoration: none;
+  border-bottom: 2px solid var(--scarf-red);
+}
+
+@media (max-width: 740px) {
+  .zone-pill,
+  .desktop-tip {
+    display: none;
+  }
+
+  .top-bar {
+    padding: 5px 8px;
+  }
+
+  .hud-chip {
+    padding: 2px 6px;
+    font-size: 0.72rem;
+  }
+
+  .joystick-zone {
+    width: 112px;
+    height: 112px;
+  }
+
+  .joystick-base {
+    width: 94px;
+    height: 94px;
+  }
+
+  .tongue-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 0.75rem;
+  }
+
+  .slash-btn {
+    width: 76px;
+    height: 76px;
+    font-size: 0.95rem;
+  }
+}
